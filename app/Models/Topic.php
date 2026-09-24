@@ -9,7 +9,8 @@ class Topic extends Model
     //
     protected $fillable = ['title', 'description'];
 
-    public function lessons() {
+    public function lessons()
+    {
         return $this->hasMany(Lesson::class);
     }
 }
