@@ -9,18 +9,12 @@ class TopicController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * ALL
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        // This returns all topics
+        return Topic::all();
     }
 
     /**
@@ -28,7 +22,16 @@ class TopicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validate the request body
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        // create the topic
+        $topic = Topic::create($validated);
+
+        return response()->json($topic, 201);
     }
 
     /**
@@ -36,15 +39,7 @@ class TopicController extends Controller
      */
     public function show(Topic $topic)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Topic $topic)
-    {
-        //
+        return $topic;
     }
 
     /**
@@ -52,7 +47,15 @@ class TopicController extends Controller
      */
     public function update(Request $request, Topic $topic)
     {
-        //
+        // validate the request
+        $validated = $request->validate([
+            'title' => 'sometimes|required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $topic->update($validated);
+
+        return $topic;
     }
 
     /**
@@ -60,6 +63,8 @@ class TopicController extends Controller
      */
     public function destroy(Topic $topic)
     {
-        //
+        $topic->delete();
+
+        return response()->json(null, 204);
     }
 }
