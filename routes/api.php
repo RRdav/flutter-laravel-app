@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\TopicController;
+use App\Http\Controllers\LessonController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -9,3 +10,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::apiResource('/topics', TopicController::class);
+Route::apiResource('/lessons', LessonController::class);
