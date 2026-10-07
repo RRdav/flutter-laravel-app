@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Quiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 
 class QuizController extends Controller
 {
@@ -12,7 +13,7 @@ class QuizController extends Controller
      */
     public function index()
     {
-        return Quiz::all();
+        return Quiz::with('questions')->get();
     }
 
     /**
@@ -23,11 +24,14 @@ class QuizController extends Controller
         $validated = $request->validate([
             'title' => 'required|string:255',
             'type' => 'required|string:255|in:lesson_summary,mixed_review',
+            'question_ids' => 'array',
+            'question_ids.*' => 'exists:questions,id',
         ]);
 
-        $quiz = Quiz::create($validated);
+        $quiz = Quiz::create(Arr::except($validated, 'question_ids'));
+        $quiz->questions()->sync($validated['question_ids'] ?? []);
 
-        return response()->json($quiz, 201);
+        return response()->json($quiz->load('questions'), 201);
     }
 
     /**
@@ -45,13 +49,18 @@ class QuizController extends Controller
     {
         $validated = $request->validate([
             'title' => 'string|max:255',
-            'type' => 'string|max:255|in:lesson_summary,mixed_review',
-
+            'type' => 'in:lesson_summary,mixed_review',
+            'question_ids' => 'array',
+            'question_ids.*' => 'exists:questions,id',
         ]);
 
-        $quiz->update($validated);
+        $quiz->update(Arr::except($validated, 'question_ids'));
 
-        return $quiz;
+        if ($request->has('question_ids')) {
+            $quiz->questions()->sync($validated['question_ids']);
+        }
+
+        return $quiz->load('questions');
     }
 
     /**
