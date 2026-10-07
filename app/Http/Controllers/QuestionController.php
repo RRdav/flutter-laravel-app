@@ -48,7 +48,7 @@ class QuestionController extends Controller
             'question' => 'string',
         ]);
 
-        Question::update($validated);
+        $question->update($validated);
 
         return $question;
     }
