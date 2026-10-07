@@ -39,7 +39,7 @@ class QuizController extends Controller
      */
     public function show(Quiz $quiz)
     {
-        return $quiz;
+        return $quiz->load('questions');
     }
 
     /**
