@@ -22,8 +22,8 @@ class QuizController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string:255',
-            'type' => 'required|string:255|in:lesson_summary,mixed_review',
+            'title' => 'required|string',
+            'type' => 'required|string|in:lesson_summary,mixed_review',
             'question_ids' => 'array',
             'question_ids.*' => 'exists:questions,id',
         ]);
