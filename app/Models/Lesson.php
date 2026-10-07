@@ -9,7 +9,8 @@ class Lesson extends Model
     //
     protected $fillable = ['topic_id', 'title', 'content'];
 
-    public function topic() {
+    public function topic()
+    {
         return $this->belongsTo(Topic::class);
     }
 }
