@@ -8,11 +8,13 @@ class Question extends Model
 {
     protected $fillable = ['lesson_id', 'question'];
 
-    public function lesson() {
+    public function lesson()
+    {
         return $this->belongsTo(Lesson::class);
     }
 
-    public function questions() {
+    public function questions()
+    {
         return $this->hasMany(Question::class);
     }
 }

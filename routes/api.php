@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\LessonController;
-use App\Http\Controllers\TopicController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\TopicController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

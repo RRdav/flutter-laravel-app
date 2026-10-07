@@ -22,7 +22,7 @@ class QuestionController extends Controller
     {
         $validated = $request->validate([
             'lesson_id' => 'required|exists:lessons,id',
-            'question' => 'required|string'
+            'question' => 'required|string',
         ]);
 
         $question = Question::create($validated);
@@ -45,7 +45,7 @@ class QuestionController extends Controller
     {
         $validated = $request->validate([
             'lesson_id' => 'exists:lessons,id',
-            'question' => 'string'
+            'question' => 'string',
         ]);
 
         Question::update($validated);
